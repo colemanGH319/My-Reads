@@ -37,7 +37,6 @@ class SearchBar extends Component {
     const displayResults = value === ''
     ? {}
     : value
-    console.log(displayResults)
       return (
         <div>
           <div className="search-books-bar">
@@ -58,7 +57,9 @@ class SearchBar extends Component {
             {Object.values(displayResults).map((book) => (
               <li key={book.id}>
                 <Book bookCover={book.imageLinks ? book.imageLinks.thumbnail : ''}
-                 bookTitle={book.title} author={book.authors}
+                 bookTitle={book.title}
+                 author={(book.authors !== null && book.authors !== undefined)
+                        ? Object.values(book.authors).join(', ') : ''}
                  updateShelf={(book) => this.props.handleUpdate(book)} bookInfo={book}/>
                </li>
             ))}
