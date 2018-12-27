@@ -57,9 +57,9 @@ class BooksApp extends React.Component {
             </div>
             <div className="list-books-content">
               <div>
-                {[0, 1, 2].map((num) =>(
-                    <Shelf key={this.shelves[num][0]} books={books} readStatus={this.shelves[num][0]}
-                    readStatusDisplay={this.shelves[num][1]}
+                {this.shelves.map((shelf) =>(
+                    <Shelf key={shelf[0]} books={books} readStatus={shelf[0]}
+                    readStatusDisplay={shelf[1]}
                     handleUpdate={(book) => this.update(book)}/>
                   ))
                 }
@@ -74,9 +74,6 @@ class BooksApp extends React.Component {
             </div>
           </div>
         )} />
-
-
-
       </div>
     )
   }

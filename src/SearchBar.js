@@ -1,13 +1,13 @@
 import React, {Component} from 'react'
 import { Link } from 'react-router-dom'
 import * as BooksAPI from './BooksAPI'
-import {Book} from './BookShelf'
+import { Book } from './BookShelf'
 
 class SearchBar extends Component {
 
   state = {
     query: '',
-    value: ''
+    value: {}
   }
 
   updateQuery = (query) => {
