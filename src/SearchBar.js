@@ -34,9 +34,6 @@ class SearchBar extends Component {
   render() {
 
     const { query, value } = this.state
-    const displayResults = value === ''
-    ? {}
-    : value
       return (
         <div>
           <div className="search-books-bar">
@@ -54,7 +51,7 @@ class SearchBar extends Component {
           </div><br/><br/>
           <div>
             <ol className="books-grid">
-            {Object.values(displayResults).map((book) => (
+            {Object.values(value).map((book) => (
               <li key={book.id}>
                 <Book bookCover={book.imageLinks ? book.imageLinks.thumbnail : ''}
                  bookTitle={book.title}

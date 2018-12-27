@@ -4,25 +4,15 @@ import React, {Component} from 'react';
 class SelectShelf extends Component {
 
   state = {
-    value: ''
+    value: this.props.book.shelf
   }
 
-  updateShelf = (value) => {
-    this.setState({
-      value: value
-    })
-
-    console.log(this.props.bookInfo)
-  }
-
-  //(event) => this.updateShelf(event.target.value)
-
-  //onChange={(event) => {this.props.onUpdateShelf(event.target.value)}}
+  shelfOptions = ["move", "none", "currentlyReading", "wantToRead", "read"]
 
   changeShelf = (book, value) => {
     book.shelf = value
     this.props.onUpdateShelf(book)
-    console.log(book.shelf)
+    this.setState({value: value})
   }
 
   render(){
