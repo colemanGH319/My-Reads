@@ -15,14 +15,29 @@ class SearchBar extends Component {
     .then((value) => {
       this.setState({
         query: query,
-        value: value
+        value: value.error === "empty query" ? {} : value
       })
     })
   }
 
+  onChangeInput = (query) => {
+    if (query === ''){
+      this.setState(() => ({
+        query: '',
+        value: {}
+      }))
+    } else {
+      this.updateQuery(query)
+    }
+  }
+
   render() {
 
-    const { value } = this.state
+    const { query, value } = this.state
+    const displayResults = value === ''
+    ? {}
+    : value
+    console.log(displayResults)
       return (
         <div>
           <div className="search-books-bar">
@@ -31,8 +46,8 @@ class SearchBar extends Component {
             </Link>
             <div className="search-books-input-wrapper">
 
-              <input onChange={(event) => this.updateQuery(event.target.value)}
-              type="text" value={this.state.query}
+              <input onChange={(event) => this.onChangeInput(event.target.value)}
+              type="text" value={query}
               placeholder="Search by title or author"/>
 
             </div>
@@ -40,9 +55,9 @@ class SearchBar extends Component {
           </div><br/><br/>
           <div>
             <ol className="books-grid">
-            {Object.values(value).map((book) => (
+            {Object.values(displayResults).map((book) => (
               <li key={book.id}>
-                <Book bookCover={book.imageLinks.thumbnail}
+                <Book bookCover={book.imageLinks ? book.imageLinks.thumbnail : ''}
                  bookTitle={book.title} author={book.authors}
                  updateShelf={(book) => this.props.handleUpdate(book)} bookInfo={book}/>
                </li>
@@ -51,6 +66,7 @@ class SearchBar extends Component {
           </div>
         </div>
       )
+
   }
 }
 
