@@ -1,7 +1,7 @@
 import React from 'react'
 import * as BooksAPI from './BooksAPI'
 import './App.css'
-import Shelf from './Book'
+import Shelf from './BookShelf'
 import SearchBar from './SearchBar'
 import { Link } from 'react-router-dom'
 import { Route } from 'react-router-dom'
@@ -56,12 +56,13 @@ class BooksApp extends React.Component {
 
   render() {
     const { books } = this.state
+    console.log(books)
     return (
       <div className="app">
 
         <Route exact path="/search" render = {() =>(
           <div className="search-books">
-            <SearchBar />
+            <SearchBar handleUpdate={(book) => this.update(book)}/>
             <div className="search-books-results">
               <ol className="books-grid"></ol>
             </div>
