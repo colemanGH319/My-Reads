@@ -4,7 +4,6 @@ import SelectShelf from './SelectShelf';
 
 function Book(props) {
     const currentBook = props.bookList.filter((book) => (book.id === props.bookInfo.id))
-    console.log(currentBook)
     return (
       <div className="book">
         <div className="book-top">
