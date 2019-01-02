@@ -10,16 +10,6 @@ class SearchBar extends Component {
     value: {}
   }
 
-  updateQuery = (query) => {
-    BooksAPI.search(query)
-    .then((value) => {
-      this.setState({
-        query: query,
-        value: value.error === "empty query" ? {} : value
-      })
-    })
-  }
-
   onChangeInput = (query) => {
     if (query === ''){
       this.setState(() => ({
@@ -27,12 +17,29 @@ class SearchBar extends Component {
         value: {}
       }))
     } else {
-      this.updateQuery(query)
+      this.setState(() => (
+        { query: query }
+      ))
     }
+    this.updateQuery(query)
+  }
+
+  updateQuery = (query) => {
+    BooksAPI.search(query)
+    .then((value) => {
+      this.setState({
+        value: (value === null || value === undefined || value.error) ? {} : value
+      })
+    })
+  }
+
+  filterBooks = (books, id) => {
+    return books.filter((book) => (
+      book.id === id
+    ))
   }
 
   render() {
-
     const { query, value } = this.state
       return (
         <div>
@@ -57,7 +64,8 @@ class SearchBar extends Component {
                  bookTitle={book.title}
                  author={(book.authors !== null && book.authors !== undefined)
                         ? Object.values(book.authors).join(', ') : ''}
-                 updateShelf={(book) => this.props.handleUpdate(book)} bookInfo={book}/>
+                 updateShelf={(book) => this.props.handleUpdate(book)}
+                 bookInfo={book} bookList={this.props.books}/>
                </li>
             ))}
             </ol>

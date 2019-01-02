@@ -1,17 +1,17 @@
 import React, {Component} from 'react';
 import SelectShelf from './SelectShelf';
 
-//attributes from Book: updateShelf={this.props.handleUpdate} bookInfo={book}
 
-//attributes from selectshelf: onUpdateShelf={props.updateShelf} bookID={props.bookInfo}
 function Book(props) {
-
+    const currentBook = props.bookList.filter((book) => (book.id === props.bookInfo.id))
+    console.log(currentBook)
     return (
       <div className="book">
         <div className="book-top">
           <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: 'url("' + props.bookCover + '")' }}></div>
           <div className="book-shelf-changer">
-            <SelectShelf onUpdateShelf={(book) => {props.updateShelf(book)}} book={props.bookInfo}/>
+            <SelectShelf onUpdateShelf={(book) => {props.updateShelf(book)}} book={props.bookInfo}
+            currentShelf={currentBook.length > 0 ? currentBook[0].shelf : "none"}/>
           </div>
         </div>
         <div className="book-title">{props.bookTitle}</div>
@@ -35,7 +35,8 @@ class Shelf extends Component {
                 <li key={book.id}>
                   <Book bookCover={book.imageLinks.thumbnail}
                    bookTitle={book.title} author={book.authors.join(', ')}
-                   updateShelf={(book) => this.props.handleUpdate(book)} bookInfo={book}/>
+                   updateShelf={(book) => this.props.handleUpdate(book)} bookInfo={book}
+                   bookList={this.props.books}/>
                 </li>
             )) }
           </ol>
